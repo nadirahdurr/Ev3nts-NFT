@@ -58,7 +58,7 @@ function HeaderMint({}) {
               className="font-kalam text-2xl font-bold text-black transition duration-150 ease-in-out"
               aria-label="0xSocialClub"
             >
-              0xSocialClub
+              Ev3ntsNFT
             </Link>
           </div>
 

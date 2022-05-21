@@ -5,12 +5,10 @@ function AboutMint() {
         {/* Section header */}
         <div className="max-w-3xl mx-auto text-center">
           <h1 className="h1 font-kalam text-black mb-4 text-2xl md:text-4xl">
-            0xGREEN?
+            What is Ev3ntsNFT?
           </h1>
           <p className="font-josefin md:text-base text-xs">
-            <b>0xGREEN</b> is your access pass to the 0xSocialClub Smoker’s
-            Lounge including token-gated membership access as well as rewards,
-            perks, and IRL discounts. Rewards may vary based on age/location. 
+            About Ev3ntsNFT?..... 
           </p>
         </div>
       </div>

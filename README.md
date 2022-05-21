@@ -2,5 +2,5 @@
 
 clone repo 
 
-run npm install 
-run npm run dev to start project
+* run npm install 
+* run npm run dev to start project
