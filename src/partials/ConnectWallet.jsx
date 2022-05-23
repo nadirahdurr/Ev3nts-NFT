@@ -1,39 +1,51 @@
 // import { useContext } from "react";
+import React, { useEffect, useState } from 'react'
 // import { TransactionContext } from "../context/TransactionContext";
-import { BiError } from "react-icons/bi";
-import { AiOutlineCheckCircle } from "react-icons/ai";
+import { BiError } from 'react-icons/bi'
+import { AiOutlineCheckCircle } from 'react-icons/ai'
 
-function ConnectWallet() {
+const ConnectWallet = (props) => {
   // const { connect, disconnect, account } = useContext(TransactionContext);
+  const connect = (e) => {
+    props.connect()
+  }
+  const disconnect = (e) => {
+    props.disconnect()
+  }
   return (
     <div>
       <div className="flex justify-center">
         {/* {!account ? ( */}
+
+        {!props.isConnected && (
           <button
-            // onClick={connect}
-            className="btn font-kalam uppercase rounded-lg border-black border-2 bg-[#02a346] hover:bg-[#7abfa0] shadow-lg shadow-black h-12 w-80"
+            onClick={connect}
+            className="bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline h-12 w-80"
           >
             Connect Your Wallet To Mint
           </button>
-        {/* ) : ( */}
-          {/* <button
-            // onClick={disconnect}
-            className="btn font-kalam uppercase rounded-lg border-black border-2 bg-[#02a346] hover:bg-[#7abfa0] shadow-lg shadow-black"
+        )}
+
+        {props.isConnected && (
+          <button
+            onClick={disconnect}
+            className="bg-red-700 hover:bg-red-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline h-12 w-80"
           >
             Disconnect Your Wallet
-          </button> */}
+          </button>
+        )}
         {/* )} */}
       </div>
-      <div className="flex justify-center pt-6 font-josefin items-center">
+      <div className="flex justify-center pt-6 pb-6 font-josefin items-center">
         Connection Status:
         {/* {!account ? ( */}
-          <BiError className="text-red-600 text-2xl" />
+        <BiError className="text-red-600 text-2xl" />
         {/* ) : ( */}
-          {/* <AiOutlineCheckCircle className="text-green-700 text-2xl" /> */}
+        {/* <AiOutlineCheckCircle className="text-green-700 text-2xl" /> */}
         {/* )} */}
       </div>
     </div>
-  );
+  )
 }
 
-export default ConnectWallet;
+export default ConnectWallet

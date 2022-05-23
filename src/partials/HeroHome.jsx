@@ -18,15 +18,15 @@ function HeroHome() {
           <div className=" pt-10  max-w-xl mx-auto md:max-w-none md:flex justify-center  md:items-center md:space-x-8 lg:space-x-16 xl:space-x-20 space-y-16 md:space-y-0">
             {/* Content */}
             <div className="text-center " data-aos="fade-right">
-              <h1 className="md:ml-5 lg:text-5xl text-4xl font-bold text-[#f0d50a] mb-4 font-kalam uppercase">
+              <h1 className="md:ml-5 lg:text-5xl text-4xl font-bold text-[#f0d50a] mb-4 uppercase">
                 {" "}
                 Welcome to the
               </h1>
-              <h1 className="lg:text-5xl text-4xl font-bold text-[#f0d50a] mb-4 font-kalam">
+              <h1 className="lg:text-5xl text-4xl font-bold text-[#f0d50a] mb-4">
                 {" "}
                 0xSOCIALCLUB
               </h1>
-              <p className="lg:text-xl text-md text-slate-100 mb-5 font-kalam font-bold uppercase">
+              <p className="lg:text-xl text-md text-slate-100 mb-5 font-bold uppercase">
                 Making NFTs fun again and creating <br /> opportunities for
                 everyone to win.
               </p>

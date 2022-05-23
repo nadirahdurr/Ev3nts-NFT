@@ -1,0 +1,14 @@
+[
+    {
+        "id":"phish",
+        "title": "Phish",
+        "description":"Welcome to Phish's NFT minting page! <b>Thank you for being a fan!</b>",
+        "codes": ["phish123","phish124"]
+    },
+    {
+        "id":"thearcadefire",
+        "title": "The Arcade Fire",
+        "description":"Welcome to The Arcade Fire's NFT minting page! <b>Thank you for being a fan!</b>",
+        "codes": ["arcadefire123","arcadefire124"]
+    }
+]

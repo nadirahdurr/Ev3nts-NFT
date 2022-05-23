@@ -30,9 +30,12 @@ function App() {
   return (
     <>
       <Routes>
-        <Route exact path="/" element={<Mint />} />
+        <Route path={'/'} exact element={<Mint/>} />
+        <Route path="/m/:bandId" element={<Mint />} />
+        <Route path="/m/:bandId/:codeId" element={<Mint />} />
         {/* <Route path="/0xBlackMint" element={<BlackMintPage />} />
         <Route path="/yellowgate" element={<YellowGate />} /> */}
+        <Route element={Mint} />
       </Routes>
     </>
   );

@@ -1,7 +1,33 @@
 // import { useContext } from "react";
 // import { TransactionContext } from "../context/TransactionContext";
+import React, { useEffect, useState } from 'react'
+import { useParams, useNavigate } from 'react-router-dom'
 
-function MintButton() {
+const MintButton = (props) => {
+  const { codeId } = useParams()
+  const [band, setBand] = useState({})
+  const [email, setEmail] = useState("")
+  const [code, setCode] = useState("")
+  const [isMinting, setIsMinting] = useState(false)
+
+  useEffect(() => {
+    if (props.band) setBand(props.band)
+  }, [props.band])
+
+  useEffect(() => {
+    if (codeId) setCode(codeId)
+  }, [codeId])
+
+  const onInputChange = (e) => {
+    //const value = e.target.value
+    //props.response(value)
+  }
+  const delay = ms => new Promise(res => setTimeout(res, ms))
+  const doMint = async (e) => {
+    setIsMinting(true)
+    await delay(3000)
+    setIsMinting(false)
+  }
   // const {
   //   freeMintAmount,
   //   publicMintAmount,
@@ -19,117 +45,63 @@ function MintButton() {
   // } = useContext(TransactionContext);
 
   return (
-    <div className="flex justify-center px-12 pb-12">
-      {/* {account ? ( */}
-        <div className="flex flex-wrap gap-2 gap-4 mt-12">
-          {/* {ogMintActive && list[account] && balanceOf == 0 ? ( */}
-            <div className="rounded-lg bg-gray-100 text-black px-12 py-6 shadow-md shadow-black border-black border-2">
-              <div>
-                <div className="font-bold text-center font-kalam uppercase">
-                  Verified OG Holder Mint
-                </div>
-                <div className="text-center font-kalam">(1 per wallet)</div>
-                <div className="flex justify-center flex-nowrap pb-2 gap-12 pt-4">
-                  <div className="text-4xl font-kalam">Free Mint Amount</div>
-                </div>
-                <div className="flex justify-center ">
-                  <button
-                    // onClick={freeMintTransaction}
-                    className="btn font-kalam uppercase rounded-lg border-black border-2 bg-[#02a346] 
-              hover:bg-[#7abfa0] w-60 h-12 shadow-lg shadow-black"
-                  >
-                    {/* {loadingOgMint ? ( */}
-                      {/* <svg
-                        role="status"
-                        className="w-6 h-6 mr-2 text-gray-300 animate-spin fill-black spin 3s linear infinite"
-                        viewBox="0 0 100 101"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                          fill="currentColor"
-                        />
-                        <path
-                          d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                          fill="currentFill"
-                        />
-                      </svg> */}
-                    {/* ) : (
-                      "MINT"
-                    )} */}
-                    MINT
-                  </button>
-                </div>
-              </div>
-            </div>
-          {/* ) : (
-            ""
-          )} */}
-          {/* {publicMintActive ? ( */}
-            <div className="rounded-lg bg-gray-100 text-black px-12 py-6 shadow-md shadow-black border-black border-2">
-              <div className="font-bold text-center font-kalam uppercase">
-                Public Mint For 0.0420 ETH
-              </div>
-              <div className="text-center font-kalam">(10 per transaction)</div>
+    <div className="flex justify-center px-12 pb-4">
+      <div className="w-full max-w-xs">
+        <form className="bg-white shadow-md rounded px-8 pt-6 pb-8">
+          <div className="max-w-3xl mx-auto text-center mb-3">
+            <span className="text-lg">Enter your info</span>
+          </div>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="email"
+            >
+              Email
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="username"
+              type="text"
+              placeholder="Email"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="code"
+            >
+              Code
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="username"
+              type="text"
+              placeholder="Code"
+              value={code}
+              onChange={onInputChange}
+            />
+          </div>
+          <div className="flex items-center justify-between">
+            {!isMinting && (<button
+              onClick={()=>doMint()}
+              className="bg-blue-700 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+              type="button"
+            >
+              Mint NFT
+            </button>)}
+            {isMinting && (<button
+              disabled
+              className="bg-blue-300 hover:bg-blue-300 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+              type="button"
+            >
+              Minting NFT..
+            </button>)}
+          </div>
+        </form>
 
-              <div className="flex justify-center flex-nowrap pb-2 gap-12 pt-4">
-                <button
-                  // onClick={handleDecrementClick}
-                  className="btn font-kalam uppercase rounded-lg border-black border-2 bg-[#02a346] 
-            hover:bg-[#7abfa0] shadow-md shadow-black h-8 w-8"
-                >
-                  -
-                </button>
-                <div className="text-4xl font-kalam">1</div>
-                <button
-                  // onClick={handleIncrementClick}
-                  className="btn font-kalam uppercase rounded-lg border-black border-2 bg-[#02a346] 
-            hover:bg-[#7abfa0] shadow-md shadow-black h-8 w-8"
-                >
-                  +
-                </button>
-              </div>
-              <div className="flex justify-center ">
-                {" "}
-                <button
-                  // onClick={publicMintTransaction}
-                  className="btn font-kalam uppercase rounded-lg border-black border-2 bg-[#02a346] 
-              hover:bg-[#7abfa0] w-60 h-12 shadow-lg shadow-black"
-                >
-                  {/* {loadingPublicMint ? ( */}
-                    {/* <svg
-                      role="status"
-                      className="w-6 h-6 mr-2 text-gray-300 animate-spin fill-black spin 3s linear infinite"
-                      viewBox="0 0 100 101"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                        fill="currentColor"
-                      />
-                      <path
-                        d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                        fill="currentFill"
-                      />
-                    </svg> */}
-                  {/* ) : (
-                    "MINT"
-                  )} */}
-                  MINT
-                </button>
-              </div>
-            </div>
-          {/* ) : (
-            ""
-          )} */}
-        </div>
-      {/* ) : (
-        ""
-      )} */}
+      </div>
     </div>
-  );
+  )
 }
 
-export default MintButton;
+export default MintButton
