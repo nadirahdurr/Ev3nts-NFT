@@ -18,8 +18,8 @@ const MintButton = (props) => {
     if (codeId) setCode(codeId)
   }, [codeId])
 
-  const onInputChange = (e) => {
-    //const value = e.target.value
+  const onCodeChange = (e) => {
+    setCode(e.target.value)
     //props.response(value)
   }
   const delay = ms => new Promise(res => setTimeout(res, ms))
@@ -78,7 +78,7 @@ const MintButton = (props) => {
               type="text"
               placeholder="Code"
               value={code}
-              onChange={onInputChange}
+              onChange={onCodeChange}
             />
           </div>
           <div className="flex items-center justify-between">
@@ -87,14 +87,14 @@ const MintButton = (props) => {
               className="bg-blue-700 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
               type="button"
             >
-              Mint NFT
+              Mint ConcertPoster
             </button>)}
             {isMinting && (<button
               disabled
               className="bg-blue-300 hover:bg-blue-300 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
               type="button"
             >
-              Minting NFT..
+              Minting ConcertPoster..
             </button>)}
           </div>
         </form>

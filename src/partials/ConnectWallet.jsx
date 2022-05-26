@@ -14,7 +14,7 @@ const ConnectWallet = (props) => {
   }
   return (
     <div>
-      <div className="flex justify-center">
+      <div className="flex justify-center mt-6">
         {/* {!account ? ( */}
 
         {!props.isConnected && (
@@ -29,21 +29,19 @@ const ConnectWallet = (props) => {
         {props.isConnected && (
           <button
             onClick={disconnect}
-            className="bg-red-700 hover:bg-red-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline h-12 w-80"
+            className="mb-2 bg-red-700 hover:bg-red-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline h-12 w-80"
           >
             Disconnect Your Wallet
           </button>
         )}
-        {/* )} */}
       </div>
-      <div className="flex justify-center pt-6 pb-6 font-josefin items-center">
+      {/* <div className="flex justify-center pt-6 pb-6 font-josefin items-center">
         Connection Status:
-        {/* {!account ? ( */}
-        <BiError className="text-red-600 text-2xl" />
-        {/* ) : ( */}
-        {/* <AiOutlineCheckCircle className="text-green-700 text-2xl" /> */}
-        {/* )} */}
-      </div>
+        {!props.currentAccount && <BiError className="text-red-600 text-2xl" />}
+        {props.currentAccount && (
+          <AiOutlineCheckCircle className="text-green-700 text-2xl" />
+        )}
+      </div> */}
     </div>
   )
 }
