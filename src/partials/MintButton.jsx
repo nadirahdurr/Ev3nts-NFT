@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import ContractAbi from '../utils/abi.json'
 import whiteListAddresses from '../utils/whitelist.json'
+import contractAddress from '../utils/contractAddress.json'
 import { ethers } from 'ethers'
 
 const MintButton = (props) => {
@@ -12,9 +13,6 @@ const MintButton = (props) => {
   const [band, setBand] = useState({})
   const [email, setEmail] = useState('')
   const [code, setCode] = useState('')
-  const [contractAddress] = useState(
-    '0x381328A73E3a3C17cf64e20A68eB2Dd8DFf07f86'
-  )
   const [isMinting, setIsMinting] = useState(false)
   const contractABI = ContractAbi.abi
 
