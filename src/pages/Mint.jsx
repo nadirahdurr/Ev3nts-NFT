@@ -6,11 +6,8 @@ import BandDescription from '../partials/BandDescription'
 import ConcertDescription from '../partials/ConcertDescription'
 import ConnectWallet from '../partials/ConnectWallet'
 import MintButton from '../partials/MintButton'
-import MintCollectionSize from '../partials/MintCollectionSize'
 import BandsList from '../utils/bands.json'
 import { useParams, useNavigate } from 'react-router-dom'
-// import { useWeb3React } from '@web3-react/core'
-import { ethers } from 'ethers'
 import StepsMint from '../partials/StepsMint'
 import phishLogo from '../phish.png'
 
@@ -21,7 +18,6 @@ const Band = (props) => {
   const [currentAccount, setCurrentAccount] = useState('')
   const [concert, setConcert] = useState({})
   const navigate = useNavigate()
-  // const { active, account, library, connector, activate, deactivate } = useWeb3React()
 
   const connectWallet = async () => {
     await connectMetamask()
@@ -107,28 +103,24 @@ const Band = (props) => {
     <div className="flex flex-col min-h-screen overflow-hidden bg-gray-200">
       {/*  Site header */}
       <HeaderMint />
-      {band.logo == true && (<div className="mx-auto text-center pt-20">
-        <img
-          src={phishLogo}
-          width="600"
-        />
-      </div>)}
-      {band.logo != true && (<div className="mx-auto text-center pt-24"/>)}
+      {band.logo == true && (
+        <div className="mx-auto text-center pt-20">
+          <img src={phishLogo} width="600" />
+        </div>
+      )}
+      {band.logo != true && <div className="mx-auto text-center pt-24" />}
       {/* Main Content */}
-      {/* <BandLanding /> */}
       <BandDescription band={band} />
-      {/* <ConcertDescription concert={concert} /> */}
       <ConnectWallet
         band={band}
         isConnected={isConnected}
         connect={() => connectWallet()}
         disconnect={() => disconnectMetamask()}
-        currentAccount={currentAccount}
       />
-      {isConnected && <MintButton band={band} />}
+      {isConnected && (
+        <MintButton band={band} currentAccount={currentAccount} />
+      )}
       <StepsMint />
-      {/* <MintCollectionSize /> */}
-      {/* <Footer /> */}
       <p className="text-center text-gray-500 text-xs mt-6">
         &copy;2022 Ev3nts NFT. All rights reserved.
       </p>
