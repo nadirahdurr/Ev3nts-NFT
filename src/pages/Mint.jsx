@@ -49,11 +49,6 @@ const Band = (props) => {
   const checkIfWalletIsConnected = async () => {
     try {
       const { ethereum } = window
-      if (!ethereum) {
-        console.log('Make sure you have Metamask!')
-      } else {
-        console.log('We have the ethereum object', ethereum)
-      }
       const accounts = await ethereum.request({
         method: 'eth_requestAccounts',
       })
@@ -71,7 +66,6 @@ const Band = (props) => {
   }
   useEffect(() => {
     checkIfWalletIsConnected()
-    console.log(bandId)
     if (!bandId) setBand({})
   }, [])
 
@@ -108,7 +102,7 @@ const Band = (props) => {
           <img src={phishLogo} width="600" />
         </div>
       )}
-      {band.logo != true && <div className="mx-auto text-center pt-24" />}
+      {band.logo != true && <div className="mx-auto text-center pt-10" />}
       {/* Main Content */}
       <BandDescription band={band} />
       <ConnectWallet
@@ -116,6 +110,7 @@ const Band = (props) => {
         isConnected={isConnected}
         connect={() => connectWallet()}
         disconnect={() => disconnectMetamask()}
+        currentAccount={currentAccount}
       />
       {isConnected && (
         <MintButton band={band} currentAccount={currentAccount} />

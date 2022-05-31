@@ -25,10 +25,8 @@ const MintButton = (props) => {
   }, [codeId])
 
   useEffect(() => {
-    console.log(props.currentAccount)
-    console.log(whiteListAddresses)
     setMintError('')
-  }, [props])
+  }, [])
 
   const onCodeChange = (e) => {
     setCode(e.target.value)
@@ -65,7 +63,7 @@ const MintButton = (props) => {
       setIsMinting(false)
     } catch (e) {
       console.error(e)
-      setMintError(e.toString())
+      setMintError("Sorry! Couldn't mint the ConcertPoster")
       setIsMinting(false)
     }
   }
@@ -129,9 +127,10 @@ const MintButton = (props) => {
           </div>
           {mintError && (
             <div className="text-center">
-              <p className="text-red-600 text-xs">{mintError}</p>
+              <p className="text-red-600 text-xs mt-2 font-bold">{mintError}</p>
             </div>
           )}
+
         </form>
       </div>
     </div>

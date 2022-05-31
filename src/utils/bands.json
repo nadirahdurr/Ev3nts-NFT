@@ -20,11 +20,5 @@
         "codes": ["phish123", "phish124"]
       }
     ]
-  },
-  {
-    "id": "thearcadefire",
-    "title": "The Arcade Fire",
-    "description": "Welcome to The Arcade Fire's NFT minting page",
-    "codes": ["arcadefire123", "arcadefire124"]
   }
 ]

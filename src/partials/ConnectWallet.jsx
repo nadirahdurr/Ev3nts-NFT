@@ -5,7 +5,12 @@ import { BiError } from 'react-icons/bi'
 import { AiOutlineCheckCircle } from 'react-icons/ai'
 
 const ConnectWallet = (props) => {
-  // const { connect, disconnect, account } = useContext(TransactionContext);
+  const [shortWallet, setShortWallet] = useState('')
+  useEffect(() => {
+    if (props.currentAccount) setShortWallet(props.currentAccount.slice(0, 5)+"..."+props.currentAccount.slice(-4))
+    else setShortWallet("")
+  }, [props.currentAccount])
+
   const connect = (e) => {
     props.connect()
   }
@@ -35,13 +40,11 @@ const ConnectWallet = (props) => {
           </button>
         )}
       </div>
-      {/* <div className="flex justify-center pt-6 pb-6 font-josefin items-center">
-        Connection Status:
-        {!props.currentAccount && <BiError className="text-red-600 text-2xl" />}
-        {props.currentAccount && (
-          <AiOutlineCheckCircle className="text-green-700 text-2xl" />
-        )}
-      </div> */}
+      {shortWallet && (
+            <div className="text-center mb-4">
+              <p className="text-gray-800"><b>Connected Wallet:</b> {shortWallet}</p>
+            </div>
+          )}
     </div>
   )
 }
