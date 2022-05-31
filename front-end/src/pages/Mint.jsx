@@ -66,11 +66,11 @@ const Band = (props) => {
   }
   useEffect(() => {
     // Connect Wallet on page load
-    //checkIfWalletIsConnected()
-    if (!bandId) setBand({})
+    // checkIfWalletIsConnected()
   }, [])
 
   useEffect(() => {
+        // If no bandId, then set it as empty
     if (!bandId) setBand({})
   }, [bandId])
 
