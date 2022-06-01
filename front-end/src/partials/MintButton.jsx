@@ -10,6 +10,7 @@ import { ethers } from 'ethers'
 const MintButton = (props) => {
   const { codeId } = useParams()
   const [mintError, setMintError] = useState('')
+  const [currentAccount, setCurrentAccount] = useState('')
   const [band, setBand] = useState({})
   const [email, setEmail] = useState('')
   const [code, setCode] = useState('')
@@ -27,6 +28,10 @@ const MintButton = (props) => {
   useEffect(() => {
     setMintError('')
   }, [])
+  
+  useEffect(() => {
+    setCurrentAccount(props.currentAccount)
+  }, [props.currentAccount])
 
   const onCodeChange = (e) => {
     setCode(e.target.value)
@@ -51,7 +56,6 @@ const MintButton = (props) => {
       setMintError('')
       setIsMinting(true)
       const { ethereum } = window
-      const currentAccount = props.currentAccount
       const provider = new ethers.providers.Web3Provider(ethereum)
       const signer = provider.getSigner()
       const posterContract = new ethers.Contract(
@@ -72,39 +76,6 @@ const MintButton = (props) => {
     <div className="flex justify-center px-12 pb-4">
       <div className="w-full max-w-xs">
         <form className="bg-white shadow-md rounded px-8 pt-6 pb-8">
-          {/* <div className="max-w-3xl mx-auto text-center mb-3">
-            <span className="text-lg">Enter your info</span>
-          </div> */}
-          {/* <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="email"
-            >
-              Email
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="username"
-              type="text"
-              placeholder="Email"
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="code"
-            >
-              Code
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="username"
-              type="text"
-              placeholder="Code"
-              value={code}
-              onChange={onCodeChange}
-            />
-          </div> */}
           <div className="flex items-center justify-between">
             {!isMinting && (
               <button
