@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import ContractAbi from '../utils/abi.json'
-import whiteListAddresses from '../utils/whitelist.json'
+import whiteListAddresses from '../utils/whitelist'
 import contractAddress from '../utils/contractAddress.json'
 import { ethers } from 'ethers'
 
 const MintButton = (props) => {
   const { codeId } = useParams()
   const [mintError, setMintError] = useState('')
+  const [proof, setProof] = useState({})
   const [currentAccount, setCurrentAccount] = useState('')
   const [band, setBand] = useState({})
+
   const [email, setEmail] = useState('')
   const [code, setCode] = useState('')
   const [isMinting, setIsMinting] = useState(false)
-  const contractABI = ContractAbi.abi
+  const contractABI = ContractAbi
 
   useEffect(() => {
     if (props.band) setBand(props.band)
@@ -25,28 +27,30 @@ const MintButton = (props) => {
 
   useEffect(() => {
     setMintError('')
+    setProof(buildWhiteList(props.currentAccount))
   }, [])
 
   useEffect(() => {
-    setCurrentAccount(props.currentAccount)
+    if (props.currentAccount) {
+      setCurrentAccount(props.currentAccount)
+    }
   }, [props.currentAccount])
 
   const onCodeChange = (e) => {
     setCode(e.target.value)
   }
 
-  const merkleProof = (address) => {
-    const whitekObj = {}
-    if (whiteListAddresses.length > 0 && address) {
-      const leaves = whiteListAddresses.map((address) => keccak256(address))
-      const tree = new MerkleTree(leaves, keccak256, { sortPairs: true })
-      for (let i = 0; i < whiteListAddresses.length; i++) {
-        let hashAddressFor = keccak256(whiteListAddresses[i])
-        let forProof = tree.getHexProof(hashAddressFor)
-        whitekObj[whiteListAddresses[i]] = forProof
-      }
+  const buildWhiteList = () => {
+    const leaves = whiteListAddresses.map((address) => keccak256(address));
+    const tree = new MerkleTree(leaves, keccak256, { sortPairs: true });
+    const whiteListObj = {}
+    for (var [i, value] in whiteListAddresses) {
+      let hashAddressFor = keccak256(whiteListAddresses[i]);
+      let forProof = tree.getHexProof(hashAddressFor);
+      whiteListObj[whiteListAddresses[i]] = forProof;
     }
-    return whitekObj
+    console.log(whiteListObj)
+    return whiteListObj
   }
 
   const doMint = async () => {
@@ -57,11 +61,13 @@ const MintButton = (props) => {
       const provider = new ethers.providers.Web3Provider(ethereum)
       const signer = provider.getSigner()
       const posterContract = new ethers.Contract(
-        contractAddress,
+        contractAddress[0],
         contractABI,
         signer
       )
-      await posterContract.mint(1, merkleProof[currentAccount])
+      const signerAddress = await signer.getAddress()
+      console.log(proof)
+      await posterContract.mint(1, proof[signerAddress])
       setIsMinting(false)
     } catch (e) {
       console.error(e)
@@ -99,7 +105,6 @@ const MintButton = (props) => {
               <p className="text-red-600 text-xs mt-2 font-bold">{mintError}</p>
             </div>
           )}
-
         </form>
       </div>
     </div>
