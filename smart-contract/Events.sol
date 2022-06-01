@@ -7,6 +7,7 @@ import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 import "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
+import "hardhat/console.sol";
 
 import './AbstractERC1155Factory.sol';
 
@@ -20,10 +21,9 @@ contract Events is AbstractERC1155Factory, VRFConsumerBase {
     uint public maxPerWallet = 1; 
     mapping(address => uint) public walletBalance; 
     bytes32 public merkleRoot;
-    uint256[] public collectionSize; 
-    uint256[] public collectionSupply; 
-    string public baseMetadataURI; //the token metadata URI
-    uint256 public newResult;
+    uint256[] public collectionSize; // an array of items each item represents the amount of tokens per id 
+    uint256[] public collectionSupply; // an array of items each item represents the amount of supply minted per id. we set to zero initally 
+    string public baseMetadataURI;
 
     // chainlink 
     bytes32 internal keyHash; // identifies which chainlink oracle to use 
@@ -35,8 +35,8 @@ contract Events is AbstractERC1155Factory, VRFConsumerBase {
         string memory _symbol,
         string memory _uri,
         uint256[] memory _collectionSize, 
-        uint256[] memory _collectionSupply, 
-        bytes32 _merkleRoot) 
+        uint256[] memory _collectionSupply,
+        bytes32 _merkleRoot)
         ERC1155(_uri) 
         VRFConsumerBase(
             // vrf coodinator - address of smart contract thats vefiys the number returned by chainlink
@@ -47,15 +47,17 @@ contract Events is AbstractERC1155Factory, VRFConsumerBase {
             keyHash = 0x2ed0feb3e7fd2022120aa84fab1945545a9f2ffc9076fd6156fa96eaff4c1311; 
             // 0.1 LINK
             fee = 0.1 * 10 ** 18;
-            merkleRoot = _merkleRoot;
 
+            // setting values needed to deploy 
             name_ = _name;
             symbol_ = _symbol;
+            merkleRoot = _merkleRoot;
             collectionSize = _collectionSize; 
             collectionSupply = _collectionSupply; 
             baseMetadataURI = _uri;
         }
 
+    // sets our merkle proof for our mint allow list 
     function setMerkleRoot(bytes32 _passedRoot) public onlyOwner {
         merkleRoot = _passedRoot;
     }
@@ -70,38 +72,22 @@ contract Events is AbstractERC1155Factory, VRFConsumerBase {
         );
     }
 
+    // used to make mint active or not active 
     function toggleMint() public onlyOwner {
         mintActive = !mintActive;
         getRandomNumber();
     }
-
+    
+    // gets random number from chainlink using the amount of link we deposited to the smart contract and the keyhash we provided 
     function getRandomNumber() private returns (bytes32 requestId) {
         require(LINK.balanceOf(address(this)) >= fee, "Not enough LINK in contract");
         return requestRandomness(keyHash, fee);
     }
 
+    // finds random number between 1 and the length of the collection size array 
     function fulfillRandomness(bytes32 requestId, uint randomness) internal override {
-        randomResult = (randomness % 4) + 1; 
+        randomResult = (randomness % collectionSize.length) + 1; 
     } 
-
-    function findAvaliableId(uint256[] memory collection, uint256[] memory supply, uint256 amount) private view returns (uint256 newId) {
-        uint256 id = randomResult;
-        uint256 index = id - 1;
-
-        if (supply[index] + amount > collection[index] && randomResult < supply.length) {
-            return randomResult + 1; 
-        } 
-
-        if (supply[index] + amount > collection[index] && randomResult == supply.length) {
-            return randomResult - 1;
-        }
-
-        if (supply[index] + amount <= collection[index]) {
-            return randomResult; 
-        }
-
-    }
-
 
     function mint(uint256 amount, bytes32[] calldata _merkleProof) public {
         // checks if mint is active also makes sure the randomresult isnt 0 since chain link takes time to set random number
@@ -110,18 +96,21 @@ contract Events is AbstractERC1155Factory, VRFConsumerBase {
         bytes32 leaf = keccak256(abi.encodePacked(msg.sender));
         // verfifies if leaf of sender and proof are apart of the root
         require(MerkleProof.verify(_merkleProof, merkleRoot, leaf), "invalid merkle proof");
+        // makes sure amount is only 1 
         require(amount == maxPerWallet, "You can only mint 1 PHISH at a time");
+        // checks to see wallet balance of minter 
         require(walletBalance[msg.sender] != maxPerWallet, "Only 1 PHISH per wallet");
+        
+        require(collectionSupply[randomResult - 1] + amount <= collectionSize[randomResult - 1] , "The are no more mints");
 
-        //checks collection to see if sold out for specific id then finds the next avaliable one
-        uint256 id = findAvaliableId(collectionSize, collectionSupply, amount); 
-        require(collectionSupply[id - 1] + amount <= collectionSize[id - 1] , "The are no more mints");
-
-        _mint(msg.sender, id, amount, "");
-        getRandomNumber();
+        _mint(msg.sender, randomResult, amount, "");
 
         // mapping to keep track of who minted from the entire collection 
         walletBalance[msg.sender] += amount; 
-        collectionSupply[id - 1] += amount; 
+        // updates colletion supply amounts 
+        collectionSupply[randomResult - 1] += amount; 
+
+        // calls chainlink vrf to generate a new random number 
+        getRandomNumber();
     }
 }
