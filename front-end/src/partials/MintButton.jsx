@@ -1,5 +1,3 @@
-// import { useContext } from "react";
-// import { TransactionContext } from "../context/TransactionContext";
 import React, { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import ContractAbi from '../utils/abi.json'
@@ -28,7 +26,7 @@ const MintButton = (props) => {
   useEffect(() => {
     setMintError('')
   }, [])
-  
+
   useEffect(() => {
     setCurrentAccount(props.currentAccount)
   }, [props.currentAccount])
