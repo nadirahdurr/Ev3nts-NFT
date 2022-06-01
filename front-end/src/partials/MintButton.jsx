@@ -49,7 +49,6 @@ const MintButton = (props) => {
       let forProof = tree.getHexProof(hashAddressFor);
       whiteListObj[whiteListAddresses[i]] = forProof;
     }
-    console.log(whiteListObj)
     return whiteListObj
   }
 
