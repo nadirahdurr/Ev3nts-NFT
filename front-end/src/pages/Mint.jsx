@@ -103,7 +103,7 @@ const Band = (props) => {
           <img src={phishLogo} width="600" />
         </div>
       )}
-      {band.logo != true && <div className="mx-auto text-center pt-10" />}
+      {band.logo != true && <div className="mx-auto text-center pt-10 md:pt-24" />}
       {/* Main Content */}
       <BandDescription band={band} />
       <ConnectWallet
