@@ -8,7 +8,7 @@ Ev3nts NFT ConcertPosters allow concert goers to bring home a digital piece of m
 
 ## Technologies
 
-This project leverages Solidity version 0.5.5 and the web version of the Remix IDE to build and test the smart contracts.
+This project leverages Solidity version 0.8.11 and the web version of the Remix IDE to build and test the smart contracts.
 
 - [OpenZeppelin](https://github.com/OpenZeppelin/openzeppelin-contracts) - this is a library for secure smart contract development.
 
