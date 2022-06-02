@@ -22,7 +22,7 @@ This project leverages Solidity version 0.5.5 and the web version of the Remix I
 
 - [IPFS](https://ipfs.io/) - A peer-to-peer hypermedia protocol designed to preserve and grow humanity's knowledge by making the web upgradeable, resilient, and more open.
 
-- [OpenSea](https://opensea.io/) - A gas-free marketplace for NFTs on Polygon. Create, buy, sell, and auction NFTs on the Polygon blockchain without paying any gas fees.
+- [OpenSea](https://opensea.io/) - A marketplace for NFTs to create, buy, sell, and auction.
 
 - [React](https://reactjs.org/) - a JavaScript library for building user interfaces.
 
