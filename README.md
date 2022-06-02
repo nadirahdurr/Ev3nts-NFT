@@ -87,7 +87,7 @@ With our product,
   - Reward your biggest fans with a more personal, community-driven experience
   - Raise more money for you, your merch artists, or any cause of your choosing
   - Solve the ticket bot crisis with PosterHolder Only pre-sales
-- Fars are able to:
+- Fans are able to:
   - Build a stronger community
   - Access to exclusive events and perks
   - Purchase face-value tickets
